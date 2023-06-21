@@ -18,5 +18,4 @@ public class AndhraBank implements BankOperations {
 	public void balanceAmount() {
 		System.out.println("The Balance Amount in Andhra Bank is "+walletAmount);
 	}
-	
 }

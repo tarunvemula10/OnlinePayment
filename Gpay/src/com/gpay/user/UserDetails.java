@@ -7,13 +7,15 @@ public class UserDetails {
 	private int gPin;
 	private int upiPin;
 	
+	
+	
 	private static UserDetails instance = null;
 	
 	private UserDetails(String userName, long userPhone, int gPin, int upiPin) {
 		this.userName = userName;
 		this.userPhone = userPhone;
 		this.gPin = gPin;
-		this.upiPin = upiPin;
+		this.upiPin= upiPin;
 	}
 	
 	public String getUserName() {
@@ -23,14 +25,14 @@ public class UserDetails {
 		return userPhone;
 	}
 	
-	public boolean verifyUpiPin(int pin) {
-		if(pin==upiPin) {
+	public static boolean verifyUpiPin(int pin) {
+		if(pin==instance.upiPin) {
 			return true;
 		}
 		return false;
 	}
-	public boolean verifyGPin(int pin) {
-		if(pin==gPin) {
+	public static boolean verifyGPin(int pin) {
+		if(pin==instance.gPin) {
 			return true;
 		}
 		return false;

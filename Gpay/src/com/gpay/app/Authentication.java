@@ -15,36 +15,47 @@ public class Authentication {
 	public static void createAccount() {
 		
 		System.out.print("Enter the Name : ");
-		String name = sc.next();
+		userName = sc.next();
 		
 		System.out.print("Enter the Phone Number : ");
-		long pNo = sc.nextLong();
+		phNo = sc.nextLong();
 		
-		System.out.print("Enter the G-pin : ");
-		int gPin = sc.nextInt();
+		while(!(CheckOperations.checkPhoneDigits(phNo))) {
+			System.err.println("Invalid Number!");
+			System.out.print("Please Enter the number again : ");
+			phNo = sc.nextLong();
+		}
 		
-		System.out.println("Confirm G-pin : ");
+		System.out.print("Enter the Google pin : ");
+		googlePin = sc.nextInt();
+		
+		System.out.println("Confirm Google pin : ");
 		int cGpin = sc.nextInt();
 		
+		while(!CheckOperations.confirmPin(googlePin, cGpin)) {
+			System.err.println("Invalid pin!, Please Enter the pin again");
+			
+			System.out.print("Enter the Google pin : ");
+			googlePin = sc.nextInt();
+			
+			System.out.println("Confirm Google pin : ");
+			cGpin = sc.nextInt();
+		}
+		
 		System.out.print("Enter the UPI pin : ");
-		int upiPin = sc.nextInt();
+		UPI_Pin = sc.nextInt();
 		
 		System.out.print("Confirm UPI pin : ");
 		int cUpiPin = sc.nextInt();
 		
-		if(CheckOperations.confirmPin(gPin, cGpin) && 
-				CheckOperations.confirmPin(upiPin, cUpiPin) && 
-				CheckOperations.checkPhoneDigits(pNo)) {
+		while(!CheckOperations.confirmPin(UPI_Pin, cUpiPin)) {
+			System.err.println("Invalid pin!, Please Enter the pin again");
 			
-			UserDetails.getInstance(name, pNo, gPin, upiPin);
+			System.out.print("Enter the UPI pin : ");
+			UPI_Pin = sc.nextInt();
 			
-			name = userName;
-			pNo = phNo;
-			googlePin = gPin;
-			UPI_Pin = upiPin;
-		} else {
-			System.err.println("The Details are not Accurate, Please Enter again");
-			createAccount();
+			System.out.print("Confirm UPI pin : ");
+			cUpiPin = sc.nextInt();
 		}
 	}
 	
@@ -53,8 +64,9 @@ public class Authentication {
 		System.out.print("Enter the gPin : ");
 		int gPin = sc.nextInt();
 		
-		if(UserDetails.getInstance(userName, phNo, googlePin, UPI_Pin)
-				.verifyGPin(gPin)) {
+		UserDetails.getInstance(userName, phNo, googlePin, UPI_Pin);
+		
+		if(UserDetails.verifyGPin(gPin)) {
 			return true;
 		}
 		
